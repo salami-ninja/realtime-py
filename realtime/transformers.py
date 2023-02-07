@@ -5,16 +5,6 @@ import json
 from dateutil.parser import parse
 
 
-conversion_map = {
-    'abstime': noop, 'bool': to_boolean, 'date': noop, 'daterange': to_date_range,
-    'float4': to_float, 'float8': to_float, 'int2': to_int, 'int4': to_int, 'int8': to_int,
-    'int4range': to_int_range, 'int8range': to_int_range, 'json': to_json, 'jsonb': to_json,
-    'money': to_float, 'numeric': to_float, 'oid': to_int, 'reltime': noop, 'time': noop,
-    'timestamp': to_timestamp_string, 'timestamptz': parse, 'timetz': parse, 'tsrange': to_date_range,
-    'tstzrange': to_date_range
-}
-
-
 """
 Takes an array of columns and an object of string values then converts each string value
 to its mapped type.
@@ -106,3 +96,15 @@ def to_array(string_value: str, type: str):
 
 def to_timestamp_string(string_value: str):
     return string_value.replace(" ", "T")
+
+
+
+conversion_map = {
+    'abstime': noop, 'bool': to_boolean, 'date': noop, 'daterange': to_date_range,
+    'float4': to_float, 'float8': to_float, 'int2': to_int, 'int4': to_int, 'int8': to_int,
+    'int4range': to_int_range, 'int8range': to_int_range, 'json': to_json, 'jsonb': to_json,
+    'money': to_float, 'numeric': to_float, 'oid': to_int, 'reltime': noop, 'time': noop,
+    'timestamp': to_timestamp_string, 'timestamptz': parse, 'timetz': parse, 'tsrange': to_date_range,
+    'tstzrange': to_date_range
+}
+

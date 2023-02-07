@@ -2,9 +2,9 @@ from collections import defaultdict
 from functools import wraps
 from typing import Any, Callable, List, Dict, cast, TypeVar, TYPE_CHECKING, NamedTuple
 from typing_extensions import ParamSpec
-from types import Callback
-from exceptions import NotConnectedError
-from message import HEARTBEAT_PAYLOAD, PHOENIX_CHANNEL, ChannelEvents, Message
+from .types import Callback
+from .exceptions import NotConnectedError
+from .message import HEARTBEAT_PAYLOAD, PHOENIX_CHANNEL, ChannelEvents, Message
 from db.mongo_client import MongoServer
 from datetime import datetime 
 import requests
@@ -52,7 +52,7 @@ class Socket:
         self.kept_alive = False
         self.restart = False
         self.done = False
-        self.channels = cast(defaultdict(str, List[Channel]), self.channels)
+        self.channels = cast(defaultdict[str, List[Channel]], self.channels)
         self.closedCount = 0
 
     @ensure_connection

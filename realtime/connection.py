@@ -5,7 +5,6 @@ from typing_extensions import ParamSpec
 from .types import Callback
 from .exceptions import NotConnectedError
 from .message import HEARTBEAT_PAYLOAD, PHOENIX_CHANNEL, ChannelEvents, Message
-from db.mongo_client import MongoServer
 from datetime import datetime 
 import requests
 import json
@@ -13,9 +12,6 @@ import websockets
 import asyncio
 import logging
 import time
-
-db = MongoServer()
-
 
 T_Retval = TypeVar("T_Retval")
 T_ParamSpec = ParamSpec("T_ParamSpec")
@@ -165,7 +161,6 @@ class Socket:
 
     async def _manageChannels(self) -> None:
         await asyncio.sleep(5)
-        i=0
         localBreak = 0
         while True:
             if self.restart == True:
@@ -173,13 +168,6 @@ class Socket:
             if localBreak == 1:
                 break
             await asyncio.sleep(1)
-            collectionsToWatch = db.getCollectionsToListen()
-            #print(collectionsToWatch)
-            for collection in collectionsToWatch:
-                if str(collection) not in str(self.channels):
-                    self.restart = True
-                    localBreak = 1
-                    break
 
     @ensure_connection
     def set_channel(self, topic: str):
